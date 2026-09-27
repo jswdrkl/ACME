@@ -1,374 +1,526 @@
 <!DOCTYPE html>
-<html lang="mr" class="light">
+<html lang="mr" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Masters in ‘SMS’ at ‘ACME’</title>
   
-  <!-- IBM Plex Sans & IBM Plex Sans Devanagari -->
+  <!-- IBM Plex Sans & IBM Plex Sans Devanagari Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Devanagari:wght@300;400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-  
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['"IBM Plex Sans Devanagari"', '"IBM Plex Sans"', 'sans-serif'],
-          }
-        }
-      }
-    }
-  </script>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Devanagari:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
 
   <style>
+    :root {
+      --bg-gradient: radial-gradient(circle at 10% 20%, #fef3c7 0%, transparent 28%),
+                     radial-gradient(circle at 90% 15%, #e0e7ff 0%, transparent 32%),
+                     radial-gradient(circle at 50% 50%, #fce7f3 0%, transparent 35%),
+                     radial-gradient(circle at 20% 85%, #dbeafe 0%, transparent 30%),
+                     radial-gradient(circle at 85% 80%, #dcfce7 0%, transparent 32%),
+                     #fdfbf7;
+      --card-bg: rgba(255, 255, 255, 0.82);
+      --card-border: rgba(255, 255, 255, 0.9);
+      --card-shadow: 0 16px 40px -12px rgba(115, 115, 115, 0.15), 0 0 1px 1px rgba(255, 255, 255, 0.6);
+      --text-color: #1e293b;
+      --title-color: #0f172a;
+      --divider-color: #f472b6;
+      --btn-bg: rgba(255, 255, 255, 0.92);
+      --btn-color: #334155;
+      --btn-border: rgba(226, 232, 240, 0.9);
+      --btn-hover: #f8fafc;
+      --toast-bg: #0f172a;
+      --toast-color: #f8fafc;
+    }
+
+    [data-theme="dark"] {
+      --bg-gradient: radial-gradient(circle at 12% 18%, #2e1065 0%, transparent 30%),
+                     radial-gradient(circle at 88% 20%, #1e1b4b 0%, transparent 34%),
+                     radial-gradient(circle at 50% 50%, #172554 0%, transparent 35%),
+                     radial-gradient(circle at 20% 85%, #064e3b 0%, transparent 30%),
+                     radial-gradient(circle at 82% 82%, #4a044e 0%, transparent 32%),
+                     #090d16;
+      --card-bg: rgba(15, 23, 42, 0.78);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.65), 0 0 1px 1px rgba(255, 255, 255, 0.08);
+      --text-color: #e2e8f0;
+      --title-color: #f8fafc;
+      --divider-color: #fb7185;
+      --btn-bg: rgba(30, 41, 59, 0.88);
+      --btn-color: #e2e8f0;
+      --btn-border: rgba(255, 255, 255, 0.12);
+      --btn-hover: #334155;
+      --toast-bg: #f8fafc;
+      --toast-color: #0f172a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      font-family: 'IBM Plex Sans Devanagari', 'IBM Plex Sans', sans-serif;
+      font-family: "IBM Plex Sans Devanagari", "IBMPlexSans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: medium;
+      line-height: 1.85;
+      color: var(--text-color);
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.25rem 0.85rem 3rem 0.85rem;
+      transition: background 0.4s ease, color 0.3s ease;
       word-break: normal;
       overflow-wrap: break-word;
       word-wrap: break-word;
       hyphens: none;
-      -webkit-font-smoothing: antialiased;
-      transition: background-color 0.4s ease, color 0.4s ease;
+      -webkit-hyphens: none;
     }
 
-    /* Light Theme Multicolor Mesh Background */
-    .light body {
-      background: radial-gradient(at 0% 0%, rgba(254, 226, 226, 0.7) 0px, transparent 50%),
-                  radial-gradient(at 100% 0%, rgba(224, 231, 255, 0.8) 0px, transparent 50%),
-                  radial-gradient(at 100% 100%, rgba(254, 240, 138, 0.5) 0px, transparent 50%),
-                  radial-gradient(at 0% 100%, rgba(220, 252, 231, 0.7) 0px, transparent 50%),
-                  radial-gradient(at 50% 50%, rgba(243, 232, 255, 0.6) 0px, transparent 60%),
-                  #fcfaff;
-      color: #1e293b;
+    .top-bar {
+      width: 100%;
+      max-width: 760px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 0.65rem;
+      margin-bottom: 1.25rem;
     }
 
-    /* Dark Theme Multicolor Mesh Background */
-    .dark body {
-      background: radial-gradient(at 0% 0%, rgba(76, 29, 149, 0.45) 0px, transparent 50%),
-                  radial-gradient(at 100% 0%, rgba(30, 58, 138, 0.45) 0px, transparent 50%),
-                  radial-gradient(at 100% 100%, rgba(13, 148, 136, 0.3) 0px, transparent 50%),
-                  radial-gradient(at 0% 100%, rgba(159, 18, 57, 0.35) 0px, transparent 50%),
-                  #0c0f1d;
-      color: #e2e8f0;
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.55rem 0.95rem;
+      border-radius: 9999px;
+      border: 1px solid var(--btn-border);
+      background: var(--btn-bg);
+      color: var(--btn-color);
+      font-family: inherit;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+      user-select: none;
     }
 
-    /* Justified text formatting */
-    .text-body-justified {
-      text-align: justify;
-      text-justify: inter-word;
-      line-height: 1.95;
+    .action-btn:hover {
+      background: var(--btn-hover);
+      transform: translateY(-1px);
     }
 
-    /* SVG Keyframe Animations */
-    @keyframes floatGentle {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-7px) rotate(0.8deg); }
+    .action-btn:active {
+      transform: translateY(0);
     }
 
-    @keyframes pulseGlow {
-      0%, 100% { opacity: 0.55; transform: scale(1); }
-      50% { opacity: 0.9; transform: scale(1.05); }
+    .action-btn svg {
+      width: 17px;
+      height: 17px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
     }
 
-    @keyframes rotateAura {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
+    .main-container {
+      width: 100%;
+      max-width: 760px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      box-shadow: var(--card-shadow);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 20px;
+      padding: 2.25rem 2.25rem;
+      transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
-    @keyframes petalSway {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.04) translateY(-2px); }
-    }
-
-    .anim-float {
-      animation: floatGentle 6s ease-in-out infinite;
-      transform-origin: center center;
-    }
-
-    .anim-pulse-glow {
-      animation: pulseGlow 4s ease-in-out infinite;
-      transform-origin: center center;
-    }
-
-    .anim-rotate-slow {
-      animation: rotateAura 28s linear infinite;
-      transform-origin: center center;
-    }
-
-    .anim-petal {
-      animation: petalSway 5s ease-in-out infinite;
-      transform-origin: center bottom;
-    }
-  </style>
-</head>
-
-<body class="min-h-screen py-6 px-3 sm:px-6 md:px-10 flex flex-col items-center">
-
-  <!-- Sticky Top Controls Bar -->
-  <header class="w-full max-w-3xl flex justify-end items-center gap-3 mb-6">
-    <!-- Share Button -->
-    <button id="shareButton" aria-label="Share article" class="inline-flex items-center gap-2 px-3.5 py-2 text-sm font-medium rounded-xl border border-slate-200/80 dark:border-slate-700/80 bg-white/70 dark:bg-slate-800/80 backdrop-blur shadow-sm hover:shadow hover:scale-105 active:scale-95 transition-all duration-200 text-slate-700 dark:text-slate-200">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
-      </svg>
-      <span class="hidden sm:inline">Share</span>
-    </button>
-
-    <!-- Theme Toggle Button -->
-    <button id="themeToggle" aria-label="Toggle light/dark theme" class="inline-flex items-center justify-center p-2 rounded-xl border border-slate-200/80 dark:border-slate-700/80 bg-white/70 dark:bg-slate-800/80 backdrop-blur shadow-sm hover:shadow hover:scale-105 active:scale-95 transition-all duration-200 text-slate-700 dark:text-slate-200">
-      <!-- Sun Icon for Dark Mode -->
-      <svg id="sunIcon" class="w-4 h-4 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
-      </svg>
-      <!-- Moon Icon for Light Mode -->
-      <svg id="moonIcon" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
-      </svg>
-    </button>
-  </header>
-
-  <main class="w-full max-w-3xl rounded-3xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-xl border border-white/60 dark:border-slate-800/80 p-6 sm:p-10 md:p-14">
-
-    <div class="w-full flex justify-center mb-8">
-      <div class="w-full max-w-md">
-        <svg class="w-full h-auto drop-shadow-md anim-float" viewBox="0 0 540 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <!-- Multicolor Radial and Linear Gradients -->
-            <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#FDE047" stop-opacity="0.8"/>
-              <stop offset="60%" stop-color="#F472B6" stop-opacity="0.4"/>
-              <stop offset="100%" stop-color="#A78BFA" stop-opacity="0"/>
-            </radialGradient>
-
-            <linearGradient id="peakGrad" x1="0%" y1="100%" x2="0%" y2="0%">
-              <stop offset="0%" stop-color="#6366F1" stop-opacity="0.3"/>
-              <stop offset="100%" stop-color="#38BDF8" stop-opacity="0.8"/>
-            </linearGradient>
-
-            <linearGradient id="peakFrontGrad" x1="0%" y1="100%" x2="50%" y2="0%">
-              <stop offset="0%" stop-color="#8B5CF6"/>
-              <stop offset="50%" stop-color="#EC4899"/>
-              <stop offset="100%" stop-color="#F59E0B"/>
-            </linearGradient>
-
-            <linearGradient id="lotusGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#F43F5E"/>
-              <stop offset="100%" stop-color="#FB7185"/>
-            </linearGradient>
-
-            <linearGradient id="lotusGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#EC4899"/>
-              <stop offset="100%" stop-color="#C084FC"/>
-            </linearGradient>
-
-            <linearGradient id="lotusGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#38BDF8"/>
-              <stop offset="100%" stop-color="#818CF8"/>
-            </linearGradient>
-
-            <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#F472B6"/>
-              <stop offset="50%" stop-color="#FCD34D"/>
-              <stop offset="100%" stop-color="#38BDF8"/>
-            </linearGradient>
-          </defs>
-
-          <!-- Background Radiance Glow -->
-          <circle cx="270" cy="140" r="120" fill="url(#sunGlow)" class="anim-pulse-glow" />
-
-          <!-- Rotating subtle wisdom orbit ring -->
-          <g class="anim-rotate-slow">
-            <circle cx="270" cy="140" r="105" stroke="url(#ringGrad)" stroke-width="1.8" stroke-dasharray="6 8" opacity="0.65"/>
-            <circle cx="270" cy="35" r="4.5" fill="#F59E0B" />
-            <circle cx="375" cy="140" r="3.5" fill="#06B6D4" />
-            <circle cx="165" cy="140" r="3.5" fill="#EC4899" />
-            <circle cx="270" cy="245" r="4" fill="#8B5CF6" />
-          </g>
-
-          <!-- ACME Zenith / Mountain of Pinnacle Development -->
-          <polygon points="170,225 270,75 370,225" fill="url(#peakGrad)" opacity="0.45"/>
-          <polygon points="215,225 270,95 325,225" fill="none" stroke="#FDE047" stroke-width="1.2" opacity="0.7"/>
-
-          <!-- Peak Ray Lines to Zenith -->
-          <line x1="270" y1="40" x2="270" y2="70" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
-          <line x1="295" y1="48" x2="280" y2="72" stroke="#EC4899" stroke-width="2" stroke-linecap="round"/>
-          <line x1="245" y1="48" x2="260" y2="72" stroke="#06B6D4" stroke-width="2" stroke-linecap="round"/>
-
-          <!-- Lotus of Mind, Consciousness & Emotional Equilibrium (SMS & ACME) -->
-          <g class="anim-petal">
-            <!-- Outer Petals Left & Right -->
-            <path d="M 270 205 C 220 200 185 160 205 130 C 225 155 250 185 270 205 Z" fill="url(#lotusGrad3)" opacity="0.85"/>
-            <path d="M 270 205 C 320 200 355 160 335 130 C 315 155 290 185 270 205 Z" fill="url(#lotusGrad3)" opacity="0.85"/>
-
-            <!-- Mid Petals -->
-            <path d="M 270 210 C 235 190 220 145 240 120 C 255 145 265 180 270 210 Z" fill="url(#lotusGrad2)" opacity="0.9"/>
-            <path d="M 270 210 C 305 190 320 145 300 120 C 285 145 275 180 270 210 Z" fill="url(#lotusGrad2)" opacity="0.9"/>
-
-            <!-- Center Bloom Petal -->
-            <path d="M 270 215 C 250 175 250 125 270 95 C 290 125 290 175 270 215 Z" fill="url(#lotusGrad1)"/>
-          </g>
-
-          <!-- Golden Pinnacle Star at Zenith -->
-          <polygon points="270,52 274,63 285,63 276,70 280,81 270,74 260,81 264,70 255,63 266,63" fill="#FACC15" stroke="#F59E0B" stroke-width="0.8"/>
-
-          <!-- Subtle Base Pedestal -->
-          <path d="M 200 225 Q 270 236 340 225" stroke="#CBD5E1" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
-        </svg>
-      </div>
-    </div>
-
-    <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center tracking-tight text-slate-900 dark:text-white mb-8 sm:mb-10">
-      Master's in ‘SMS’ at ‘ACME’
-    </h1>
-
-    <div class="space-y-6 text-base sm:text-lg text-slate-800 dark:text-slate-200">
-      <p class="text-body-justified">
-        Management Science अर्थात व्यवस्थापन शास्त्र याचा एक स्वतंत्र विद्याशाखा म्हणून विकास गेल्या सुमारे शंभर वर्षातला आहे.
-      </p>
-
-      <p class="text-body-justified">
-        Communication skills, Time management, Delegation &amp; empowerment, Conflict resolution, Performance management, Coaching, Dealing with difficult people, Presentation skills, Providing feedback, Implementing changes, Emergency procedures and Industry-specific knowledge ही Master's in Business Administration मधे म्हणजेच कोणत्याही व्यवस्थापन अभासक्रमात शिकवली जाणारी बारा मूलभूत ‘मॅनेजमेंट स्किल्स’ आहेत. ही बारा स्किल्स आणि ‘सर्वंकष स्वास्थ्य’ लाभावे म्हणून ‘टीम-अनुभूती’च्या मदतीने ‘बारा हेल्दी हॅबिट्स’ अंगी मुरवून कोणालाही करता येणारा ‘ACME’ चा Master's in 'SMS' हा कोर्स यात काय साम्य आहे ते पाहूया.
-      </p>
-
-      <div class="text-center text-xl sm:text-2xl tracking-widest text-pink-500/85 dark:text-pink-400 py-3 select-none">
-        ❀❀❀
-      </div>
-
-      <p class="text-body-justified">
-        ‘मन’ कृतज्ञ आणि स्वस्थ असले की आपले स्वतःबरोबरचे आणि इतरांबरोबरचेही नाते निकोप राहते. म्हणजे रोजच्या जीवनात Communication skills, Time management, Conflict resolution आणि Delegation &amp; empowerment जमले!
-      </p>
-
-      <p class="text-body-justified">
-        नियमित व्यायाम आणि साधना असली की Performance management, Implementing changes, Presentation skills व Emergency procedures आटोक्यात येणारच!!
-      </p>
-
-      <p class="text-body-justified">
-        याखेरीज, नियमित सेशन मधे होणारी, कानी पडलेली व अधूनमधून ‘टीम अनुभूती’शी केलेली वैयक्तिक चर्चा म्हणजे दुसरे तिसरे काही नसून Coaching, Dealing with difficult people, Providing feedback आणि Specific knowledge याचे बारकावे आत्मसात करणे!!!
-      </p>
-
-      <div class="text-center text-xl sm:text-2xl tracking-widest text-pink-500/85 dark:text-pink-400 py-3 select-none">
-        ❀❀❀
-      </div>
-
-      <p class="text-body-justified">
-        कॉर्पोरेट-विश्वात ‘एमबीए’ झालेले असले की ‘पॅकेज’च्या आकड्यांवरील शून्ये वाढत असली तरी त्यात स्पर्धा आणि राजकारण यांचा सामना करावा लागतो. मिळणाऱ्या पॅकेजला एक ‘मर्यादा’ आणि शेवटी ‘निवृत्ती’ असते आणि पॅकेज जरी मणभर असले तरी ते खर्चून तीळभरही मानसिक आणि शारीरिक स्वास्थ्य विकत घेता येत नाही ते नाहीच.
-      </p>
-
-      <p class="text-body-justified">
-        ‘Master's in SMS @ ACME’ या अभ्यासक्रमाचे असे नाहीये. या ‘मास्टर्स’चे लक्ष्य कोणतेही आर्थिक पॅकेज मिळवणे नाहीये. त्याचे उद्दिष्ट आहे ‘सर्वंकष स्वास्थ्य’. यात नोंदणी करण्यासाठी ‘कॅट’ लागत नाही. मनापासून इच्छा असेल तर प्रवेश निश्चित मिळतो. ‘कोर्स’ life-long असला तरी त्यातले धडे प्रत्येकाने आपापल्या क्षमतेनुसार आत्मसात करायचे आहेत. मुख्य विषय आहेत बारा आणि त्यात कव्हर होतो सिलॅबस सारा.
-      </p>
-
-      <p class="text-body-justified">
-        या कोर्ससाठी कॉलेजमधे जावे लागत नाही. त्यात गलेलठ्ठ पुस्तके, रात्रीचा दिवस करून पूर्ण करायची जर्नल्स, प्रोजेक्ट्स, असाईनमेंट्स नाहीत की सेमिस्टर परीक्षा नाही. तुलना, स्पर्धा, डिस्कशन नाही. हवी असलीच तर फक्त ‘टीम-अनुभूती’ बरोबर खाजगी वैयक्तिक चर्चा. त्यातही कडक आज्ञावजा सूचना येणार नाहीत याची खात्री. कोणत्याही स्पेशलायझेशनचा आग्रह नाही. मूल्यमापन हवेच असेल तर ज्याचे त्याने करायचे; ‘ज्यूरी’ नाही. केस स्टडी करायची असेलच तर स्वतःची स्वतः
-      </p>
-
-      <p class="text-body-justified">
-        इथे ‘कॅम्पस’, ‘पिअर ग्रुप’ आणि वेळेचे टेन्शन नाही आणि पॅकेजचे म्हणाल तर जसजसे आपण आपल्याच साधनेत पुढे जातो तसतश्या ‘आतून’ जाणवणाऱ्या ‘अनुभूती-क्लिक्स’; मिळणारे व टिकून राहणारे मानसिक समाधान आणि शारीरिक स्वास्थ्य या भरगच्च पॅकेज समोर जगातील कोणत्याही चलनातील कितीही शून्ये असलेल्या आकड्यांची महती लोप पावू लागते; आपोआप. या सगळ्यासाठी करायचा अभ्यास म्हणजे फक्त साधनेत नियमितता ठेवण्याची ‘सेल्फ सर्व्हिस’; बस्स..
-      </p>
-
-      <div class="text-center text-xl sm:text-2xl tracking-widest text-pink-500/85 dark:text-pink-400 py-3 select-none">
-        ❀❀❀
-      </div>
-
-      <p class="text-body-justified">
-        आता तुम्ही म्हणाल की इतके ओढूनताणून ‘व्यवस्थापन-पुराण’ सांगून झाले तरी अद्याप बुचकळ्यात टाकणाऱ्या शीर्षकाचा अर्थ काही उलगडलाच नाहीये. तर ‘ACME’ (एक्मी) चा शब्दकोषातला अर्थ आहे the highest point of development OR the most outstanding example of.. आणि या निबंधासाठी जमून आलेला शब्दविस्तार आहे - ‘Anubhuti’, a Centre for Management of Emotions - A C M E !!!
-      </p>
-
-      <p class="text-body-justified">
-        ‘Team-Anubhuti’ = ACME = the highest point of development &amp; the most outstanding example of...
-      </p>
-
-      <p class="text-body-justified">
-        आणि म्हणून ACME च्या या Master's in 'SMS' कोर्सचा ‘यथार्थ’ आहे - highest point of development &amp; the most outstanding example of master's degree in - Self Management Study @ ‘Anubhuti’, a Centre for Management of Emotions.
-      </p>
-
-      <div class="text-center text-xl sm:text-2xl tracking-widest text-pink-500/85 dark:text-pink-400 pt-2 select-none">
-        ❀❀❀
-      </div>
-
-      <div class="text-center text-2xl sm:text-3xl pt-1 select-none">
-        ☺️
-      </div>
-    </div>
-  </main>
-
-  <div id="toast" class="fixed bottom-6 z-50 px-4 py-2.5 rounded-xl bg-slate-900 text-white dark:bg-white dark:text-slate-900 text-sm font-medium shadow-lg opacity-0 pointer-events-none transition-all duration-300 transform translate-y-3">
-    Link copied to clipboard!
-  </div>
-
-  <script>
-    // Theme toggle initialization and handlers
-    const htmlElem = document.documentElement;
-    const themeToggleBtn = document.getElementById('themeToggle');
-    const sunIcon = document.getElementById('sunIcon');
-    const moonIcon = document.getElementById('moonIcon');
-
-    function updateThemeUI(isDark) {
-      if (isDark) {
-        htmlElem.classList.add('dark');
-        htmlElem.classList.remove('light');
-        sunIcon.classList.remove('hidden');
-        moonIcon.classList.add('hidden');
-      } else {
-        htmlElem.classList.remove('dark');
-        htmlElem.classList.add('light');
-        sunIcon.classList.add('hidden');
-        moonIcon.classList.remove('hidden');
+    @media (max-width: 640px) {
+      body {
+        padding: 0.75rem 0.6rem 2rem 0.6rem;
+      }
+      .main-container {
+        padding: 1.5rem 1.15rem;
+        border-radius: 16px;
       }
     }
 
-    // Default theme based on system preference
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    updateThemeUI(prefersDark);
+    .svg-graphic-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto 1.5rem auto;
+      max-width: 380px;
+      width: 100%;
+    }
 
-    themeToggleBtn.addEventListener('click', () => {
-      const isCurrentlyDark = htmlElem.classList.contains('dark');
-      updateThemeUI(!isCurrentlyDark);
+    .svg-graphic {
+      width: 100%;
+      height: auto;
+      overflow: visible;
+    }
+
+    /* SVG Keyframe Animations */
+    @keyframes pulse-halo {
+      0%, 100% { transform: scale(1); opacity: 0.75; }
+      50% { transform: scale(1.08); opacity: 1; }
+    }
+
+    @keyframes rotate-slow {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes rotate-reverse {
+      0% { transform: rotate(360deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    @keyframes float-gentle {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    @keyframes shimmer-ray {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 0.95; }
+    }
+
+    .anim-halo {
+      animation: pulse-halo 4.5s ease-in-out infinite;
+      transform-origin: 200px 145px;
+    }
+
+    .anim-orbit {
+      animation: rotate-slow 22s linear infinite;
+      transform-origin: 200px 145px;
+    }
+
+    .anim-orbit-rev {
+      animation: rotate-reverse 26s linear infinite;
+      transform-origin: 200px 145px;
+    }
+
+    .anim-float {
+      animation: float-gentle 5s ease-in-out infinite;
+    }
+
+    .anim-shimmer {
+      animation: shimmer-ray 3.2s ease-in-out infinite;
+    }
+
+    .content-area p {
+      font-size: medium;
+      text-align: justify;
+      margin-bottom: 1.35rem;
+      text-justify: inter-word;
+    }
+
+    .content-area p:last-child {
+      margin-bottom: 0;
+    }
+
+    .title-para {
+      font-size: 1.35rem !important;
+      font-weight: 700;
+      color: var(--title-color);
+      text-align: center !important;
+      margin-bottom: 1.5rem !important;
+      letter-spacing: 0.01em;
+    }
+
+    .ornament-para {
+      text-align: center !important;
+      color: var(--divider-color);
+      font-size: 1.15rem !important;
+      letter-spacing: 0.35rem;
+      margin: 1.75rem 0 !important;
+      user-select: none;
+      opacity: 0.85;
+    }
+
+    .emoji-para {
+      text-align: center !important;
+      font-size: 1.5rem !important;
+      margin-top: 1.5rem !important;
+      line-height: 1;
+    }
+
+    .toast-notification {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(90px);
+      background: var(--toast-bg);
+      color: var(--toast-color);
+      padding: 0.65rem 1.25rem;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.25);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.28s ease;
+      z-index: 1000;
+    }
+
+    .toast-notification.active {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <button class="action-btn" id="shareBtn" aria-label="Share this document">
+      <svg viewBox="0 0 24 24">
+        <circle cx="18" cy="5" r="3"></circle>
+        <circle cx="6" cy="12" r="3"></circle>
+        <circle cx="18" cy="19" r="3"></circle>
+        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+      </svg>
+      <span>Share</span>
+    </button>
+
+    <button class="action-btn" id="themeBtn" aria-label="Toggle light and dark theme">
+      <svg id="themeIcon" viewBox="0 0 24 24">
+        <!-- Moon Icon (Default Light Mode) -->
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+      <span id="themeLabel">Dark</span>
+    </button>
+  </div>
+
+  <main class="main-container">
+    <!-- Light Colorful Animated SVG Graphic Representing the Title -->
+    <div class="svg-graphic-wrapper">
+      <svg class="svg-graphic" viewBox="0 0 400 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="gradSky" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#38bdf8" />
+            <stop offset="35%" stop-color="#818cf8" />
+            <stop offset="70%" stop-color="#ec4899" />
+            <stop offset="100%" stop-color="#f59e0b" />
+          </linearGradient>
+
+          <linearGradient id="gradSun" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#fef08a" />
+            <stop offset="50%" stop-color="#f472b6" />
+            <stop offset="100%" stop-color="#60a5fa" />
+          </linearGradient>
+
+          <linearGradient id="gradPeak" x1="0%" y1="100%" x2="50%" y2="0%">
+            <stop offset="0%" stop-color="#6366f1" stop-opacity="0.3" />
+            <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.9" />
+          </linearGradient>
+
+          <linearGradient id="gradGold" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#fbbf24" />
+            <stop offset="100%" stop-color="#f43f5e" />
+          </linearGradient>
+
+          <radialGradient id="gradCenterGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#fbcfe8" stop-opacity="0.9" />
+            <stop offset="50%" stop-color="#fed7aa" stop-opacity="0.5" />
+            <stop offset="100%" stop-color="#fdfbf7" stop-opacity="0" />
+          </radialGradient>
+
+          <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="3.5" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          </filter>
+        </defs>
+
+        <!-- Dynamic Glow Halo -->
+        <circle class="anim-halo" cx="200" cy="145" r="75" fill="url(#gradCenterGlow)" />
+
+        <!-- Mountain / Zenith Peak (Signifying ACME - The Highest Point) -->
+        <polygon points="200,52 265,182 135,182" fill="url(#gradPeak)" stroke="url(#gradSky)" stroke-width="2" stroke-linejoin="round" />
+        <polygon points="200,52 200,182 265,182" fill="#ffffff" fill-opacity="0.12" />
+
+        <!-- Orbiting Knowledge & Emotion Rings -->
+        <g class="anim-orbit">
+          <ellipse cx="200" cy="145" rx="100" ry="34" stroke="url(#gradSky)" stroke-width="1.8" stroke-dasharray="6 6" fill="none" opacity="0.75" />
+          <circle cx="300" cy="145" r="5" fill="#ec4899" filter="url(#glow)" />
+          <circle cx="100" cy="145" r="4.5" fill="#38bdf8" filter="url(#glow)" />
+        </g>
+
+        <g class="anim-orbit-rev">
+          <ellipse cx="200" cy="145" rx="72" ry="24" stroke="url(#gradSun)" stroke-width="1.6" stroke-dasharray="4 4" fill="none" opacity="0.8" />
+          <circle cx="200" cy="121" r="4" fill="#fbbf24" filter="url(#glow)" />
+          <circle cx="200" cy="169" r="4" fill="#a855f7" filter="url(#glow)" />
+        </g>
+
+        <!-- Lotus & Flourish at the Peak (Emotional Balance & Self Management) -->
+        <g class="anim-float">
+          <!-- Star/Beacon at Peak -->
+          <polygon points="200,28 204,40 216,42 207,50 210,62 200,55 190,62 193,50 184,42 196,40" fill="url(#gradGold)" filter="url(#glow)" />
+          
+          <!-- Lotus Base on the Crest -->
+          <path d="M 200 132 C 188 132 178 142 178 150 C 188 152 196 146 200 132 Z" fill="#f472b6" opacity="0.9" />
+          <path d="M 200 132 C 212 132 222 142 222 150 C 212 152 204 146 200 132 Z" fill="#ec4899" opacity="0.9" />
+          <path d="M 200 126 C 193 134 195 146 200 152 C 205 146 207 134 200 126 Z" fill="#fbbf24" />
+        </g>
+
+        <!-- Sun Rays Shimmer -->
+        <g class="anim-shimmer" stroke="url(#gradSun)" stroke-width="1.8" stroke-linecap="round">
+          <line x1="200" y1="18" x2="200" y2="8" />
+          <line x1="218" y1="24" x2="226" y2="17" />
+          <line x1="182" y1="24" x2="174" y2="17" />
+          <line x1="228" y1="42" x2="238" y2="42" />
+          <line x1="172" y1="42" x2="162" y2="42" />
+        </g>
+
+        <!-- 12 Sparkling Points Representing 12 Management Skills / 12 Healthy Habits -->
+        <circle cx="150" cy="100" r="2.2" fill="#38bdf8" />
+        <circle cx="130" cy="135" r="2" fill="#818cf8" />
+        <circle cx="140" cy="170" r="2.4" fill="#a855f7" />
+        <circle cx="165" cy="195" r="2" fill="#ec4899" />
+        <circle cx="200" cy="205" r="2.5" fill="#f43f5e" />
+        <circle cx="235" cy="195" r="2" fill="#fb923c" />
+        <circle cx="260" cy="170" r="2.4" fill="#fbbf24" />
+        <circle cx="270" cy="135" r="2" fill="#34d399" />
+        <circle cx="250" cy="100" r="2.2" fill="#2dd4bf" />
+        <circle cx="175" cy="75" r="1.8" fill="#60a5fa" />
+        <circle cx="225" cy="75" r="1.8" fill="#f472b6" />
+        <circle cx="200" cy="90" r="2.2" fill="#fbbf24" />
+      </svg>
+    </div>
+
+    <!-- Verbatim Document Contents -->
+    <article class="content-area">
+      <p class="title-para">Masters in ‘SMS’ at ‘ACME’</p>
+
+      <p>Management Science अर्थात व्यवस्थापन शास्त्र याचा एक स्वतंत्र विद्याशाखा म्हणून विकास गेल्या सुमारे शंभर वर्षातला आहे.</p>
+
+      <p>Communication skills, Time management, Delegation & empowerment, Conflict resolution, Performance management, Coaching, Dealing with difficult people, Presentation skills, Providing feedback, Implementing changes, Emergency procedures and Industry-specific knowledge ही Masters in Business Administration मधे म्हणजेच कोणत्याही व्यवस्थापन अभासक्रमात शिकवली जाणारी बारा मूलभूत ‘मॅनेजमेंट स्किल्स’ आहेत. ही बारा स्किल्स आणि ‘सर्वंकष स्वास्थ्य’ लाभावे म्हणून ‘टीम-अनुभूती’च्या मदतीने ‘बारा हेल्दी हॅबिट्स’ अंगी मुरवून कोणालाही करता येणारा ‘ACME’ चा Masters in SMS हा कोर्स यात काय साम्य आहे ते पाहूया.</p>
+
+      <p class="ornament-para">❀❀❀</p>
+
+      <p>‘मन’ कृतज्ञ आणि स्वस्थ असले की आपले स्वतःबरोबरचे आणि इतरांबरोबरचेही नाते निकोप राहते. म्हणजे रोजच्या जीवनात Communication skills, Time management, Conflict resolution आणि Delegation & empowerment जमले!</p>
+
+      <p>नियमित व्यायाम आणि साधना असली की Performance management, Implementing changes, Presentation skills व Emergency procedures आटोक्यात येणारच!!</p>
+
+      <p>याखेरीज, नियमित सेशन मधे होणारी, कानी पडलेली व अधूनमधून ‘टीम अनुभूती’शी केलेली वैयक्तिक चर्चा म्हणजे दुसरे तिसरे काही नसून Coaching, Dealing with difficult people, Providing feedback आणि Specific knowledge याचे बारकावे आत्मसात करणे!!!</p>
+
+      <p class="ornament-para">❀❀❀</p>
+
+      <p>कॉर्पोरेट-विश्वात ‘एमबीए’ झालेले असले की ‘पॅकेज’च्या आकड्यांवरील शून्ये वाढत असली तरी त्यात स्पर्धा आणि राजकारण यांचा सामना करावा लागतो. मिळणाऱ्या पॅकेजला एक ‘मर्यादा’ आणि शेवटी ‘निवृत्ती’ असते आणि पॅकेज जरी मणभर असले तरी ते खर्चून तीळभरही मानसिक आणि शारीरिक स्वास्थ्य विकत घेता येत नाही ते नाहीच.</p>
+
+      <p>‘Masters in SMS @ ACME’ या अभ्यासक्रमाचे असे नाहीये. या ‘मास्टर्स’चे लक्ष्य कोणतेही आर्थिक पॅकेज मिळवणे नाहीये. त्याचे उद्दिष्ट आहे ‘सर्वंकष स्वास्थ्य’. यात नोंदणी करण्यासाठी ‘कॅट’ लागत नाही. मनापासून इच्छा असेल तर प्रवेश निश्चित मिळतो. ‘कोर्स’ life-long असला तरी त्यातले धडे प्रत्येकाने आपापल्या क्षमतेनुसार आत्मसात करायचे आहेत. मुख्य विषय आहेत बारा आणि त्यात कव्हर होतो सिलॅबस सारा.</p>
+
+      <p>या कोर्ससाठी कॉलेजमधे जावे लागत नाही. त्यात गलेलठ्ठ पुस्तके, रात्रीचा दिवस करून पूर्ण करायची जर्नल्स, प्रोजेक्ट्स, असाईनमेंट्स नाहीत की सेमिस्टर परीक्षा नाही. तुलना, स्पर्धा, डिस्कशन नाही. हवी असलीच तर फक्त ‘टीम-अनुभूती’ बरोबर खाजगी वैयक्तिक चर्चा. त्यातही कडक आज्ञावजा सूचना येणार नाहीत याची खात्री. कोणत्याही स्पेशलायझेशनचा आग्रह नाही. मूल्यमापन हवेच असेल तर ज्याचे त्याने करायचे; ‘ज्यूरी’ नाही. केस स्टडी करायची असेलच तर स्वतःची स्वतः</p>
+
+      <p>इथे ‘कॅम्पस’, ‘पिअर ग्रुप’ आणि वेळेचे टेन्शन नाही आणि पॅकेजचे म्हणाल तर जसजसे आपण आपल्याच साधनेत पुढे जातो तसतश्या ‘आतून’ जाणवणाऱ्या ‘अनुभूती-क्लिक्स’; मिळणारे व टिकून राहणारे मानसिक समाधान आणि शारीरिक स्वास्थ्य या भरगच्च पॅकेज समोर जगातील कोणत्याही चलनातील कितीही शून्ये असलेल्या आकड्यांची महती लोप पावू लागते; आपोआप. या सगळ्यासाठी करायचा अभ्यास म्हणजे फक्त साधनेत नियमितता ठेवण्याची ‘सेल्फ सर्व्हिस’; बस्स..</p>
+
+      <p class="ornament-para">❀❀❀</p>
+
+      <p>आता तुम्ही म्हणाल की इतके ओढूनताणून ‘व्यवस्थापन-पुराण’ सांगून झाले तरी अद्याप बुचकळ्यात टाकणाऱ्या शीर्षकाचा अर्थ काही उलगडलाच नाहीये. तर ‘ACME’ (एक्मी) चा शब्दकोषातला अर्थ आहे the highest point of development OR the most outstanding example of.. आणि या निबंधासाठी जमून आलेला शब्दविस्तार आहे - ‘Anubhuti’, a Centre for Management of Emotions - A C M E !!!</p>
+
+      <p>‘Team-Anubhuti’ = ACME = the highest point of development & the most outstanding example of...</p>
+
+      <p>आणि म्हणून ACME च्या या Masters in SMS कोर्सचा ‘यथार्थ’ आहे - highest point of development & the most outstanding example of - Masters in Self Management Study @ ‘Anubhuti’, a Centre for Management of Emotions.</p>
+
+      <p class="ornament-para">❀❀❀</p>
+
+      <p class="emoji-para">☺️</p>
+    </article>
+  </main>
+
+  <div class="toast-notification" id="toast">Link copied to clipboard!</div>
+
+  <script>
+    // Theme toggle logic
+    const themeBtn = document.getElementById('themeBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeLabel = document.getElementById('themeLabel');
+    const htmlElem = document.documentElement;
+
+    const sunSVG = `
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    `;
+
+    const moonSVG = `
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    `;
+
+    function setTheme(theme) {
+      if (theme === 'dark') {
+        htmlElem.setAttribute('data-theme', 'dark');
+        themeIcon.innerHTML = sunSVG;
+        themeLabel.textContent = 'Light';
+      } else {
+        htmlElem.setAttribute('data-theme', 'light');
+        themeIcon.innerHTML = moonSVG;
+        themeLabel.textContent = 'Dark';
+      }
+    }
+
+    themeBtn.addEventListener('click', () => {
+      const currentTheme = htmlElem.getAttribute('data-theme');
+      setTheme(currentTheme === 'dark' ? 'light' : 'dark');
     });
 
-    // Share & Clipboard handling
-    const shareButton = document.getElementById('shareButton');
+    // Share button logic
+    const shareBtn = document.getElementById('shareBtn');
     const toast = document.getElementById('toast');
 
     function showToast(message) {
       toast.textContent = message;
-      toast.classList.remove('opacity-0', 'translate-y-3', 'pointer-events-none');
-      toast.classList.add('opacity-100', 'translate-y-0');
-      
+      toast.classList.add('active');
       setTimeout(() => {
-        toast.classList.remove('opacity-100', 'translate-y-0');
-        toast.classList.add('opacity-0', 'translate-y-3', 'pointer-events-none');
-      }, 2500);
+        toast.classList.remove('active');
+      }, 2400);
     }
 
-    shareButton.addEventListener('click', async () => {
+    shareBtn.addEventListener('click', async () => {
       const shareData = {
-        title: "Masters in ‘SMS’ at ‘ACME’",
-        text: "Masters in ‘SMS’ at ‘ACME’ - Masters in Self Management Study @ Anubhuti, a Centre for Management of Emotions",
+        title: 'Masters in ‘SMS’ at ‘ACME’',
+        text: 'Masters in ‘SMS’ at ‘ACME’ - Anubhuti, a Centre for Management of Emotions',
         url: window.location.href
       };
 
-      if (navigator.share && window.isSecureContext) {
+      if (navigator.share) {
         try {
           await navigator.share(shareData);
         } catch (err) {
-          // If aborted by user, do nothing; otherwise fallback to copy
           if (err.name !== 'AbortError') {
-            copyUrlFallback();
+            copyToClipboard();
           }
         }
       } else {
-        copyUrlFallback();
+        copyToClipboard();
       }
     });
 
-    function copyUrlFallback() {
-      // Use document.execCommand('copy') for maximum iFrame & browser compatibility
+    function copyToClipboard() {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(window.location.href)
+          .then(() => showToast('Link copied to clipboard!'))
+          .catch(() => fallbackCopy());
+      } else {
+        fallbackCopy();
+      }
+    }
+
+    function fallbackCopy() {
       const tempInput = document.createElement('input');
       tempInput.value = window.location.href;
       document.body.appendChild(tempInput);
@@ -376,8 +528,8 @@
       try {
         document.execCommand('copy');
         showToast('Link copied to clipboard!');
-      } catch (err) {
-        showToast('Could not copy link');
+      } catch (e) {
+        showToast('Unable to copy link');
       }
       document.body.removeChild(tempInput);
     }
