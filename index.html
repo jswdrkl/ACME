@@ -12,7 +12,7 @@
       theme: {
         extend: {
           fontFamily: {
-            sans: ['"Noto Sans"', '"Noto Sans Devanagari"', 'sans-serif'],
+            sans: ['"IBM Plex Sans"', '"IBM Plex Sans Devanagari"', 'sans-serif'],
           },
           colors: {
             brand: {
@@ -29,16 +29,18 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Devanagari:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
   <style>
     body {
-      font-family: 'Noto Sans', 'Noto Sans Devanagari', sans-serif;
+      font-family: 'IBM Plex Sans', 'IBM Plex Sans Devanagari', sans-serif;
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
     }
 
     .doc-body-text {
+      font-size: 1.125rem; /* Medium reading size (~18px) */
+      line-height: 1.85;
       text-align: justify;
       text-justify: inter-word;
       word-break: keep-all;
@@ -47,11 +49,17 @@
       -webkit-hyphens: none;
     }
 
+    @media (max-width: 640px) {
+      .doc-body-text {
+        font-size: 1.05rem; /* Balanced medium on small mobile viewports */
+        line-height: 1.78;
+      }
+    }
+
     .doc-centered-text {
       text-align: center;
     }
 
-    /* Floating and glowing animations for the SVG header graphic */
     @keyframes gentle-pulse {
       0%, 100% {
         transform: scale(1) translateY(0);
@@ -132,7 +140,6 @@
 
   <main class="w-full max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12 flex-grow">
     
-    <!-- Light colorful animated SVG graphic representing "Masters in SMS @ A C M E" -->
     <div class="flex justify-center mb-8">
       <div class="relative w-52 h-52 sm:w-64 sm:h-64 flex items-center justify-center">
         <!-- Ambient blurred glow background -->
@@ -189,41 +196,27 @@
             <line x1="245" y1="75" x2="259" y2="61" stroke="#38BDF8" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
           </g>
 
-          <!-- Lotus of Emotional Equilibrium (Base) -->
+          <!-- Lotus base -->
           <g transform="translate(0, 15)">
-            <!-- Outer Lotus Petals -->
             <path d="M160 220 C120 220 80 190 90 155 C115 155 140 180 160 220 Z" fill="url(#lotusPetalGrad2)" opacity="0.8"/>
             <path d="M160 220 C200 220 240 190 230 155 C205 155 180 180 160 220 Z" fill="url(#lotusPetalGrad2)" opacity="0.8"/>
-
-            <!-- Mid Petals -->
             <path d="M160 220 C130 215 105 170 120 140 C140 155 155 185 160 220 Z" fill="url(#lotusPetalGrad1)" opacity="0.85"/>
             <path d="M160 220 C190 215 215 170 200 140 C180 155 165 185 160 220 Z" fill="url(#lotusPetalGrad1)" opacity="0.85"/>
-
-            <!-- Center Bloom Petal -->
             <path d="M160 220 C145 190 145 140 160 120 C175 140 175 190 160 220 Z" fill="url(#lotusPetalGrad1)" filter="url(#softGlow)"/>
-
-            <!-- Radiant Core / Jewel -->
             <circle cx="160" cy="175" r="7" fill="#FEF08A" filter="url(#softGlow)" />
           </g>
 
-          <!-- Graduation Cap of "Masters" / Wisdom floating gently over the lotus -->
+          <!-- Scholar Cap representing Masters -->
           <g id="mortarboard" transform="translate(0, -5)">
-            <!-- Cap Top Diamond -->
             <polygon points="160,55 235,92 160,125 85,92" fill="url(#capGrad)" filter="url(#softGlow)"/>
-            
-            <!-- Diamond highlight rim -->
             <polygon points="160,57 230,92 160,123 90,92" fill="none" stroke="#E0E7FF" stroke-width="1.2" opacity="0.75"/>
-
-            <!-- Skull Cap base under mortarboard -->
             <path d="M115 106 C115 128 140 140 160 140 C180 140 205 128 205 106" fill="#4338CA" opacity="0.9"/>
-
-            <!-- Center button & Tassel -->
             <circle cx="160" cy="90" r="3.5" fill="#FDE047"/>
             <path d="M160 90 C185 92 208 108 214 125" fill="none" stroke="#FBBF24" stroke-width="2.5" stroke-linecap="round"/>
             <circle cx="214" cy="126" r="3" fill="#F59E0B" />
           </g>
 
-          <!-- Harmony Sparkles -->
+          <!-- Sparkles -->
           <circle cx="100" cy="95" r="2" fill="#F472B6" />
           <circle cx="225" cy="80" r="2.5" fill="#38BDF8" />
           <circle cx="85" cy="180" r="2" fill="#FBBF24" />
@@ -236,11 +229,11 @@
       
       <!-- Document Title -->
       <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-center text-slate-900 dark:text-white mb-8 sm:mb-10 leading-snug">
-        Masters in SMS @ ACME
+        Masters in SMS @ A C M E
       </h1>
 
       <!-- Document Content Body -->
-      <div class="space-y-6 text-slate-800 dark:text-slate-200 text-base sm:text-lg leading-relaxed sm:leading-loose">
+      <div class="space-y-6 text-slate-800 dark:text-slate-200">
 
         <p class="doc-body-text">
           Management Science अर्थात व्यवस्थापन शास्त्र याचा एक स्वतंत्र विद्याशाखा म्हणून विकास गेल्या सुमारे शंभर वर्षातला आहे.
@@ -332,7 +325,6 @@
       }
     }
 
-    // Default to Light as required
     let isDarkMode = false;
     try {
       const storedTheme = localStorage.getItem('theme');
@@ -340,7 +332,7 @@
         isDarkMode = true;
       }
     } catch (e) {
-      // LocalStorage not available or restricted
+      // LocalStorage fallback
     }
     updateThemeUI(isDarkMode);
 
@@ -352,7 +344,7 @@
       } catch (e) {}
     });
 
-    // Toast message trigger helper
+    // Toast notification
     let toastTimeout;
     function showToast(message) {
       const toast = document.getElementById('toast');
@@ -369,7 +361,7 @@
       }, 2500);
     }
 
-    // Share button handling
+    // Share action
     const shareBtn = document.getElementById('shareBtn');
     shareBtn.addEventListener('click', async function () {
       const shareData = {
@@ -392,7 +384,6 @@
     });
 
     function copyLinkFallback() {
-      // Robust copy fallback for iframe or environments
       const dummyInput = document.createElement('input');
       dummyInput.value = window.location.href;
       document.body.appendChild(dummyInput);
